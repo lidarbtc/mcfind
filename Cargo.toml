@@ -1,0 +1,18 @@
+[package]
+name = "mcfind"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.39"
+clap = { version = "4.5.23", features = ["derive"] }
+fastanvil = "0.31.0"
+fastnbt = "2.5.0"
+indicatif = "0.17.9"
+rayon = "1.10.0"
+serde = { version = "1.0.216", features = ["derive"] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
