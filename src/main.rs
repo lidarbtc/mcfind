@@ -97,10 +97,12 @@ fn main() {
         println!("\nFound dropped items:");
         for item in all_items {
             println!(
-                "Entity file: {}, Item: {}, Count: {}, Position: ({:.1}, {:.1}, {:.1})",
+                "Entity file: {}, Item: {}, Count: {}, Age: {:.1} seconds (Despawn in {:.1} seconds), Position: X: {:.0} Y: {:.0} Z: {:.0}",
                 item.entity_file,
                 item.item_type,
                 item.count,
+                item.age.unwrap_or(6000) as f64 / 20.0, // Tick to sec
+                (6000 - item.age.unwrap_or(6000)) as f64 / 20.0, // Remain tick to sec
                 item.position.0,
                 item.position.1,
                 item.position.2

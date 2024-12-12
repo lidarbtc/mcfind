@@ -10,6 +10,7 @@ pub struct DroppedItem {
     pub position: (f64, f64, f64),
     pub count: i32,
     pub entity_file: String,
+    pub age: Option<i16>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -25,6 +26,8 @@ struct Entity {
     pos: Vec<f64>,
     #[serde(rename = "Item")]
     item: Option<ItemData>,
+    #[serde(rename = "Age")]
+    age: Option<i16>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -60,6 +63,7 @@ pub fn find_dropped_items_in_entity_file(entity_path: &Path) -> Vec<DroppedItem>
                                         .unwrap_or_default()
                                         .to_string_lossy()
                                         .to_string(),
+                                    age: entity.age,
                                 });
                             }
                         }
