@@ -43,9 +43,13 @@ pub fn find_dropped_items_in_entity_file(entity_path: &Path) -> Vec<DroppedItem>
         panic!("Cannot open entity file {}: {}", entity_path.display(), e);
     });
 
-    let mut region = Region::from_stream(file).unwrap_or_else(|e| {
-        panic!("Cannot create Region {}: {}", entity_path.display(), e);
-    });
+    let mut region = match Region::from_stream(file) {
+        Ok(region) => region,
+        Err(e) => {
+            eprintln!("Skipping {}: {}", entity_path.display(), e);
+            return Vec::new();
+        }
+    };
 
     for chunk in region.iter().flatten() {
         match from_bytes::<EntityData>(&chunk.data) {
